@@ -1,0 +1,45 @@
+[
+  {
+    "picture": "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
+    "title": "Portrait Photography",
+    "about": "Portrait photography is a very well-known and popular style of photography. This style of photography is all about trying to capture the personality, identity, soul, and emotions of a person by utilizing the background atmosphere, poses, and lighting.A portrait can also refer to the orientation of a photograph and is the opposite of a landscape photograph.",
+    "rating": 4.5,
+    "price": 5
+  },
+  {
+    "picture": "https://images.unsplash.com/photo-1609004000524-8e41bd4bb72c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
+    "title": "Fashion Photography",
+    "about": "I will takes photographs of the  clothes, accessories, hairstyles and make-up. Fashion photographers are responsible for how clothing is presented in advertising campaigns, catalogues and fashion magazines. This is help your fashion business",
+    "rating": 4.5,
+    "price": 10
+  },
+  {
+    "picture": "https://images.unsplash.com/photo-1612872087720-bb876e2e67d1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1007&q=80",
+    "title": "Sports Photography",
+    "about": "Your organized sports tournament full cover with by me. I will takes the photography of full tournament . I will try to focus the attraction moment of the tournaments. There use my best equipment of photography.",
+    "rating": 4.3,
+    "price": 100
+  },
+  {
+    "picture": "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
+    "title": "Wedding Photography",
+    "about": "I am covering your full programme . I will try capture the best moment of your wedding . I will cover your holud sondha, Wedding , Reception . I will try take some photo of new couple in nature. Some take family moment of your wedding.",
+    "rating": 4.5,
+    "price": 80
+  },
+  {
+    "picture": "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
+    "title": "Music Photography",
+    "about": "I will take photo for your music song cover photo, banner, short video etc. You use this photo in your song banding. I will provied you the best photo for you music cover banner. I will provied you all formate of image.",
+    "rating": 4.8,
+    "price": 70
+  },
+  {
+    "picture": "https://images.unsplash.com/photo-1497015455546-1da71faf8d06?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1032&q=80",
+    "title": "Short Documentory",
+    "about": "Recent time short documentory is the best service of branding any thing. If you want to create short documentory for your event. You can haire me for this work. I will provied you the best momment of your event in low price.",
+    "rating": 4,
+    "price": 65
+  }
+  
+]

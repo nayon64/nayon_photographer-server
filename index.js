@@ -19,11 +19,18 @@ const client = new MongoClient(uri, {
 async function run() { 
 	try {
 		const blogsCollection = client.db('nayonPhotography').collection('blogs')
+		const servicesCollection = client.db('nayonPhotography').collection('services')
 		app.get('/blogs', async (req, res) => {
 			const query = {}
 			const cursor = blogsCollection.find(query)
 			const blogs = await cursor.toArray()
 			res.send(blogs)
+		})
+		app.get('/services', async (req, res) => {
+			const query = {}
+			const cursor = servicesCollection.find(query);
+			const services = await cursor.toArray()
+			res.send(services)
 		})
 		
 		app.get("/", (req, res) => {
