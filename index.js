@@ -16,16 +16,28 @@ const client = new MongoClient(uri, {
   useUnifiedTopology: true,
   serverApi: ServerApiVersion.v1,
 });
-client.connect((err) => {
-  const collection = client.db("test").collection("devices");
-  // perform actions on the collection object
-  client.close();
-});
+async function run() { 
+	try {
+		const blogsCollection = client.db('nayonPhotography').collection('blogs')
+		app.get('/blogs', async (req, res) => {
+			const query = {}
+			const cursor = blogsCollection.find(query)
+			const blogs = await cursor.toArray()
+			res.send(blogs)
+		})
+		
+		app.get("/", (req, res) => {
+			res.send("server is running");
+		});
+	}
+	finally {
+		
+	}
+}
+run().catch(err=>console.log(err))
 
 
-app.get("/", (req, res) => {
-	res.send("server is running")
-})
+
 
 app.listen(port, () => {
 	console.log(`Server is running ${port}`)
