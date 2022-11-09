@@ -34,10 +34,18 @@ async function run() {
 		// get multiple services data  
 
 		app.get('/services', async (req, res) => {
+			const size = parseInt(req.query.size);
+			console.log(size)
 			const query = {}
-			const cursor = servicesCollection.find(query);
-			const services = await cursor.toArray()
+			const cursor = servicesCollection.find(query).sort({ date: -1 });
+			const services = await cursor.limit(size).toArray()
+			console.log(services)
 			res.send(services)
+		})
+		app.post('/services', async (req, res) => {
+			const service = req.body
+			const result = await servicesCollection.insertOne(service)
+			res.send(result)
 		})
 
 		// get service single data 
