@@ -21,6 +21,7 @@ async function run() {
 	try {
 		const blogsCollection = client.db('nayonPhotography').collection('blogs')
 		const servicesCollection = client.db('nayonPhotography').collection('services')
+		const reviewsCollection = client.db('nayonPhotography').collection('reviews')
 
 		// get blogs data 
 
@@ -39,13 +40,32 @@ async function run() {
 			const query = {}
 			const cursor = servicesCollection.find(query).sort({ date: -1 });
 			const services = await cursor.limit(size).toArray()
-			console.log(services)
 			res.send(services)
 		})
+
+		// add service data 
 		app.post('/services', async (req, res) => {
 			const service = req.body
 			const result = await servicesCollection.insertOne(service)
 			res.send(result)
+		})
+
+		// add post method of review 
+
+		app.post('/reviews', async (req, res) => {
+			const review = req.body
+			const result = await reviewsCollection.insertOne(review)
+			res.send(result)
+		})
+
+		// get review by service
+		app.get('/reviews/:id', async (req, res) => {
+			const serviceId = req.params.id;
+			const query = { serviceId:serviceId};
+			const cursor = reviewsCollection.find(query);
+			console.log(cursor)
+			const reviews = await cursor.toArray();
+			res.send(reviews);
 		})
 
 		// get service single data 
