@@ -1,5 +1,6 @@
 const express = require('express')
 const cors = require('cors')
+const jwt =require('jsonwebtoken')
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 const app = express()
 require("dotenv").config();
@@ -12,16 +13,43 @@ app.use(express.json())
 
 
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.xicrlbt.mongodb.net/?retryWrites=true&w=majority`;
+
 const client = new MongoClient(uri, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   serverApi: ServerApiVersion.v1,
 });
+
+// varify jwt token function 
+const varifyJWT = (req, res, next) => {
+	const authHeader = req.headers.authorization;
+	if (!authHeader) {
+		return res.status(401).send({ massage: "unauthorized access1" });
+	}
+	const token = authHeader.split(" ")[1]
+	jwt.verify(token, process.env.ACCESS_SECRET_TOKEN, (err, decoded) => {
+		if (err) {
+			return res.status(403).send({ massage: "unauthorized access2" });
+		}
+		req.decoded = decoded;
+		next()
+	})
+}
+
+
 async function run() { 
 	try {
 		const blogsCollection = client.db('nayonPhotography').collection('blogs')
 		const servicesCollection = client.db('nayonPhotography').collection('services')
 		const reviewsCollection = client.db('nayonPhotography').collection('reviews')
+
+		// jwt api for send access token 
+		app.post("/jwt", async (req, res) => {
+			const userUid = req.body
+			console.log(userUid)
+			const token = jwt.sign(userUid, process.env.ACCESS_SECRET_TOKEN, { expiresIn: "2h" })
+			res.send({token})
+		})
 
 		// get blogs data 
 
@@ -67,13 +95,16 @@ async function run() {
 		})
 
 		// get review by useruid
-		app.get('/myReviews/:id', async (req, res) => {
+		app.get("/myReviews/:id", varifyJWT, async (req, res) => {
+			const decoded = req.decoded
+			console.log(decoded.userUid,req.params.id)
+			
 			const userUid = req.params.id;
 			const query = { userUid: userUid };
 			const cursor = reviewsCollection.find(query).sort({ date: -1 });
 			const reviews = await cursor.toArray();
 			res.send(reviews);
-		})
+		});
 
 		// delete review
 		app.delete('/myReviews/:id', async (req, res) => {
@@ -82,6 +113,7 @@ async function run() {
 			const result = await reviewsCollection.deleteOne(query);
 			res.send(result);
 		})
+
 		// get single review 
 		app.get('/updateReview/:id', async (req, res) => {
 			const id = req.params.id;
@@ -95,7 +127,6 @@ async function run() {
 			const id = req.params.id;
 			const query = { _id: ObjectId(id) };
 			const setReview = req.body
-			console.log(query, setReview)
 			const option = {upsert: true};
             const updatedReview = {
               $set: {
@@ -104,7 +135,6 @@ async function run() {
                 date: setReview.date,
               },
             };
-			console.log(updatedReview)
             const result = await reviewsCollection.updateOne(query, updatedReview, option);
             res.send(result)
 		})
