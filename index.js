@@ -70,7 +70,6 @@ async function run() {
 		app.get('/myReviews/:id', async (req, res) => {
 			const userUid = req.params.id;
 			const query = { userUid: userUid };
-			console.log(query)
 			const cursor = reviewsCollection.find(query).sort({ date: -1 });
 			const reviews = await cursor.toArray();
 			res.send(reviews);
@@ -82,6 +81,32 @@ async function run() {
 			const query = { _id: ObjectId(id) };
 			const result = await reviewsCollection.deleteOne(query);
 			res.send(result);
+		})
+		// get single review 
+		app.get('/updateReview/:id', async (req, res) => {
+			const id = req.params.id;
+			const query = { _id: ObjectId(id) };
+			const result = await reviewsCollection.findOne(query);
+			res.send(result);
+		})
+
+		// update review method 
+		app.put('/updateReview/:id', async (req, res) => {
+			const id = req.params.id;
+			const query = { _id: ObjectId(id) };
+			const setReview = req.body
+			console.log(query, setReview)
+			const option = {upsert: true};
+            const updatedReview = {
+              $set: {
+                displayName: setReview.displayName,
+                reviewValue: setReview.reviewValue,
+                date: setReview.date,
+              },
+            };
+			console.log(updatedReview)
+            const result = await reviewsCollection.updateOne(query, updatedReview, option);
+            res.send(result)
 		})
 
 		// get service single data 
