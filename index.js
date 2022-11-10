@@ -36,7 +36,6 @@ async function run() {
 
 		app.get('/services', async (req, res) => {
 			const size = parseInt(req.query.size);
-			console.log(size)
 			const query = {}
 			const cursor = servicesCollection.find(query).sort({ date: -1 });
 			const services = await cursor.limit(size).toArray()
@@ -62,10 +61,27 @@ async function run() {
 		app.get('/reviews/:id', async (req, res) => {
 			const serviceId = req.params.id;
 			const query = { serviceId:serviceId};
-			const cursor = reviewsCollection.find(query);
-			console.log(cursor)
+			const cursor = reviewsCollection.find(query).sort({ date: -1 });
 			const reviews = await cursor.toArray();
 			res.send(reviews);
+		})
+
+		// get review by useruid
+		app.get('/myReviews/:id', async (req, res) => {
+			const userUid = req.params.id;
+			const query = { userUid: userUid };
+			console.log(query)
+			const cursor = reviewsCollection.find(query).sort({ date: -1 });
+			const reviews = await cursor.toArray();
+			res.send(reviews);
+		})
+
+		// delete review
+		app.delete('/myReviews/:id', async (req, res) => {
+			const id = req.params.id;
+			const query = { _id: ObjectId(id) };
+			const result = await reviewsCollection.deleteOne(query);
+			res.send(result);
 		})
 
 		// get service single data 
